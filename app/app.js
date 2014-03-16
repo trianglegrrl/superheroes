@@ -1,6 +1,6 @@
 import Resolver from 'ember/resolver';
 
-var SuperheroesApp = Ember.Application.extend({
+var App = Ember.Application.extend({
   LOG_ACTIVE_GENERATION: true,
   LOG_MODULE_RESOLVER: true,
   LOG_TRANSITIONS: true,
@@ -10,4 +10,4 @@ var SuperheroesApp = Ember.Application.extend({
   Resolver: Resolver['default']
 });
 
-export default SuperheroesApp;
+export default App;
