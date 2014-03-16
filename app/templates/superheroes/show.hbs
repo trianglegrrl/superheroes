@@ -1,8 +1,9 @@
 <div class="superhero">
-  <h1>{{firstName}} {{lastName}}</h1>
-  <div class="clear"></div>
-  <div class="controls">
-    <a href="#" class="btn">Edit</a>
-    <button type="button" class="btn red">Delete</button>
+  <div class="photo">
+    <img {{bind-attr src="picUrl"}} />
   </div>
+  <div class="full_name">{{fullName}}</div>
+  <div class="email">{{email}}</div>
+  <div class="span3">Aggressiveness:</div>
+  <div class="span1">{{aggressiveness}}</div>
 </div>
