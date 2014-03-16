@@ -1,15 +1,17 @@
-<div id="master">
-  <ul>
-  {{#each}}
-    <li class="superhero">
-      {{#link-to 'superheroes.show' this}}
-        {{firstName}} {{lastName}}
-      {{/link-to}}
-    </li>
-  {{/each}}
-  </ul>
+<div class="row">
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <h1>Team Members</h1>
+    {{#each}}
+      <div class="superhero">
+        {{#link-to 'superheroes.show' this}}
+          {{firstName}} {{lastName}}
+        {{/link-to}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" id="detail">
+    {{outlet}}
+  </div>
 </div>
 
-<div id="detail">
-  {{outlet}}
-</div>
+
