@@ -17,3 +17,7 @@ To install and run on local OS X, if you don't have these packages:
   bower install # You might need to do this, but you shouldn't according to the EAK docs.
   grunt server
 ```
+
+# Checking that shit out
+
+Browse to ```http://127.0.0.1:8000/```
