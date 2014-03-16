@@ -1,11 +1,9 @@
-var Router = Ember.Router.extend(); // ensure we don't share routes between all Router instances
+var Router = Ember.Router.extend();
 
 Router.map(function() {
-  this.route('component-test');
-  this.route('helper-test');
-  // this.resource('posts', function() {
-  //   this.route('new');
-  // });
+  this.resource('superheroes', function() {
+    this.route('show', { path: '/:id' });
+  });
 });
 
 export default Router;
