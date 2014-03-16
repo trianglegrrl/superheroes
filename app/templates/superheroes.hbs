@@ -1,0 +1,15 @@
+<div id="master">
+  <ul>
+  {{#each}}
+    <li class="superhero">
+      {{#link-to 'superheroes.show' this}}
+        {{firstName}} {{lastName}}
+      {{/link-to}}
+    </li>
+  {{/each}}
+  </ul>
+</div>
+
+<div id="detail">
+  {{outlet}}
+</div>

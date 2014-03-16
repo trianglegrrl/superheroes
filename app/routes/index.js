@@ -1,5 +1,7 @@
-export default Ember.Route.extend({
-  model: function() {
-    return ['red', 'yellow', 'blue'];
+var IndexRoute = Ember.Route.extend({
+  redirect: function() {
+    this.transitionTo('superheroes');
   }
 });
+
+export default IndexRoute;
