@@ -1,37 +1,41 @@
 <div class="superhero">
   <div class="row">
-    <div class="panel panel-default">
-      {{! <div class="panel-heading">Panel heading without title</div> }}
-      <div class="panel-body">
-        <div class="photo pull-left">
-          <img {{bind-attr src=picUrl}} />
-        </div>
-        <div class="info pull-right">
-          <h3 class="full_name">{{fullName}}</h3>
-          <div class="email">{{mail-to email}}</div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="panel panel-default">
+        {{! <div class="panel-heading">Panel heading without title</div> }}
+        <div class="panel-body">
+          <div class="photo pull-left">
+            <img {{bind-attr src=picUrl}} />
+          </div>
+          <div class="info pull-right">
+            <h3 class="full_name">{{fullName}}</h3>
+            <div class="email">{{mail-to email}}</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">About Me</h4>
-      </div>
-      <div class="panel-body">
-        <dl class="dl-horizontal">
-          <dt>My Superpowers</dt>
-          <dd>{{superpowers}}</dd>
-          <dt>My Priorities</dt>
-          <dd>{{priorities}}</dd>
-          <dt>What I Love</dt>
-          <dd>{{whatILove}}</dd>
-          <dt>What I Hate</dt>
-          <dd>{{whatIHate}}</dd>
-          <dt>What I Need From You</dt>
-          <dd>{{whatINeed}}</dd>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">About Me</h4>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>My Superpowers</dt>
+            <dd>{{superpowers}}</dd>
+            <dt>My Priorities</dt>
+            <dd>{{priorities}}</dd>
+            <dt>What I Love</dt>
+            <dd>{{whatILove}}</dd>
+            <dt>What I Hate</dt>
+            <dd>{{whatIHate}}</dd>
+            <dt>What I Need From You</dt>
+            <dd>{{whatINeed}}</dd>
 
-        </dl>
+          </dl>
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +50,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <div class="column-fluid col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4 class="panel-title">Caliper Profile</h4>
