@@ -35,60 +35,72 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">Caliper Profile</h4>
+  <div class="row-fluid">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">DiSC Profile</h4>
+        </div>
+        <div class="panel-body">
+          <img width="100%" {{bind-attr src=discPicUrl}} />
+        </div>
       </div>
-      <div class="panel-body">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>&nbsp;</th>
-              <th>Score</th>
-              <th>&nbsp;</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Assertiveness</td><td>{{assertiveness}}</td>
-              <td>Aggressiveness</td><td>{{aggressiveness}}</td>
-            </tr>
-            <tr>
-              <td>Ego Drive</td><td>{{egoDrive}}</td>
-              <td>Empathy</td><td>{{empathy}}</td>
-            </tr>
-            <tr>
-              <td>Ego Strength/Resilience</td><td>{{egoStrengthResilience}}</td>
-              <td>Risk Taking</td><td>{{riskTaking}}</td>
-            </tr>
-            <tr>
-              <td>Urgency</td><td>{{urgency}}</td>
-              <td>Cautiousness</td><td>{{cautiousness}}</td>
-            </tr>
-            <tr>
-              <td>Sociability</td><td>{{sociability}}</td>
-              <td>Gregariousness</td><td>{{gregariousness}}</td>
-            </tr>
-            <tr>
-              <td>Accommodation</td><td>{{accommodation}}</td>
-              <td>Skepticism</td><td>{{skepticism}}</td>
-            </tr>
-            <tr>
-              <td>abstract Reasoning</td><td>{{abstractReasoning}}</td>
-              <td>Idea Orientation</td><td>{{ideaOrientation}}</td>
-            </tr>
-            <tr>
-              <td>Thoroughness</td><td>{{thoroughness}}</td>
-              <td>Flexibility</td><td>{{flexibility}}</td>
-            </tr>
-            <tr>
-              <td>Self Structure</td><td>{{selfStructure}}</td>
-              <td>External Structure</td><td>{{externalStructure}}</td>
-            </tr>
-          </tbody>
-        </table>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Caliper Profile</h4>
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th>Score</th>
+                <th>&nbsp;</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Assertiveness</td><td>{{assertiveness}}</td>
+                <td>Aggressiveness</td><td>{{aggressiveness}}</td>
+              </tr>
+              <tr>
+                <td>Ego Drive</td><td>{{egoDrive}}</td>
+                <td>Empathy</td><td>{{empathy}}</td>
+              </tr>
+              <tr>
+                <td>Ego Strength/Resilience</td><td>{{egoStrengthResilience}}</td>
+                <td>Risk Taking</td><td>{{riskTaking}}</td>
+              </tr>
+              <tr>
+                <td>Urgency</td><td>{{urgency}}</td>
+                <td>Cautiousness</td><td>{{cautiousness}}</td>
+              </tr>
+              <tr>
+                <td>Sociability</td><td>{{sociability}}</td>
+                <td>Gregariousness</td><td>{{gregariousness}}</td>
+              </tr>
+              <tr>
+                <td>Accommodation</td><td>{{accommodation}}</td>
+                <td>Skepticism</td><td>{{skepticism}}</td>
+              </tr>
+              <tr>
+                <td>abstract Reasoning</td><td>{{abstractReasoning}}</td>
+                <td>Idea Orientation</td><td>{{ideaOrientation}}</td>
+              </tr>
+              <tr>
+                <td>Thoroughness</td><td>{{thoroughness}}</td>
+                <td>Flexibility</td><td>{{flexibility}}</td>
+              </tr>
+              <tr>
+                <td>Self Structure</td><td>{{selfStructure}}</td>
+                <td>External Structure</td><td>{{externalStructure}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
