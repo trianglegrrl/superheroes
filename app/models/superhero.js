@@ -180,6 +180,36 @@ Superhero.FIXTURES = [
     flexibility:44,
     selfStructure:47,
     externalStructure:4
+  },
+  {
+    id: 33,
+    fullName:"Smashy Smashy Egg Face",
+    email: "smashysmashy@precisionnutrition.com",
+    picUrl: "http://placepuppy.it/200/150",
+    discPicUrl: "/assets/SampleDISC.png",
+    whatILove: "Red wine, long walks on the beach, and classless subnetting.",
+    whatIHate: "Nazis, snakes, and Nazis.",
+    whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
+    superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
+    priorities: "Eating, sleeping, making life difficult for The Man.",
+    assertiveness:1,
+    aggressiveness:99,
+    egoDrive:2,
+    empathy:3,
+    egoStrengthResilience:95,
+    riskTaking:13,
+    urgency:12,
+    cautiousness:93,
+    sociability:23,
+    gregariousness:88,
+    accommodation:48,
+    skepticism:84,
+    abstractReasoning:5,
+    ideaOrientation:3,
+    thoroughness:97,
+    flexibility:12,
+    selfStructure:88,
+    externalStructure:98
   }
 ];
 
