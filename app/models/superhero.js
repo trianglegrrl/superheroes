@@ -8,6 +8,7 @@ var Superhero = DS.Model.extend({
   whatILove: attr('string'),
   whatIHate: attr('string'),
   whatINeed: attr('string'),
+  majorDiscStyle: attr('string'),
   superpowers: attr('string'),
   priorities: attr('string'),
   assertiveness: DS.attr('number'),
@@ -27,7 +28,27 @@ var Superhero = DS.Model.extend({
   thoroughness: DS.attr('number'),
   flexibility: DS.attr('number'),
   selfStructure: DS.attr('number'),
-  externalStructure: DS.attr('number')
+  externalStructure: DS.attr('number'),
+
+  discStyles: {
+    'iD': 'influence/Dominance',
+    'i' : 'influence',
+    'iS': 'influence/Support',
+    'Si': 'Support/influence',
+    'S' : 'Support',
+    'SC': 'Support/Conscientiousness',
+    'CS': 'Conscientiousness/Support',
+    'C' : 'Conscientiousness',
+    'CD': 'Conscientiousness/Dominance',
+    'DC': 'Dominance/Conscientiousness',
+    'D' : 'Dominance',
+    'Di': 'Dominance/influence'
+  },
+  discStyleDescription: function() {
+    var style = this.get('majorDiscStyle');
+    var styles = this.get('discStyles');
+    return(styles[style]);
+  }.property('majorDiscStyle', 'discStyles')
 });
 
 Superhero.FIXTURES = [
@@ -40,6 +61,7 @@ Superhero.FIXTURES = [
     whatILove: "Red wine, long walks on the beach, and classless subnetting.",
     whatIHate: "Nazis, snakes, and Nazis.",
     whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
+    majorDiscStyle: 'SC',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
     assertiveness:93,
@@ -70,6 +92,7 @@ Superhero.FIXTURES = [
     whatILove: "Red wine, long walks on the beach, and classless subnetting.",
     whatIHate: "Nazis, snakes, and Nazis.",
     whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
+    majorDiscStyle: 'SC',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
     assertiveness:31,
@@ -100,6 +123,7 @@ Superhero.FIXTURES = [
     whatILove: "Red wine, long walks on the beach, and classless subnetting.",
     whatIHate: "Nazis, snakes, and Nazis.",
     whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
+    majorDiscStyle: 'Si',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
     assertiveness:31,
@@ -130,6 +154,7 @@ Superhero.FIXTURES = [
     whatILove: "Red wine, long walks on the beach, and classless subnetting.",
     whatIHate: "Nazis, snakes, and Nazis.",
     whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
+    majorDiscStyle: 'SC',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
     assertiveness:31,
@@ -160,6 +185,7 @@ Superhero.FIXTURES = [
     whatILove: "Red wine, long walks on the beach, and classless subnetting.",
     whatIHate: "Nazis, snakes, and Nazis.",
     whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
+    majorDiscStyle: 'i',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
     assertiveness:31,
