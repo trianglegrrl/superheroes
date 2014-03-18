@@ -12,7 +12,7 @@ var SuperheroesShowController = Ember.ObjectController.extend({
 
     // loop through the quality names, building a list of the most different superheroes for each name
     qualities.forEach(function(quality) {
-      var tooltip = "Least like you:<p />";
+      var tooltip = "";
 
       // get all the heroes but the current one
       var rankedHeroes = controller.store.all('superhero');
@@ -25,9 +25,7 @@ var SuperheroesShowController = Ember.ObjectController.extend({
       rankedHeroes = rankedHeroes.splice(0,5);
 
       // build the actual tooltip - rather have that in the template than here
-      rankedHeroes.forEach(function(hero) {
-        tooltip += hero.get('fullName') + ' (' + hero.get(quality) + ")<br>";
-      });
+      rankedHeroes.forEach(function(hero) { tooltip += hero.get('fullName') + ' (' + hero.get(quality) + ') '; });
       controller.set(quality + 'LeastLikeTooltip', tooltip);
     });
   }.observes('id')
