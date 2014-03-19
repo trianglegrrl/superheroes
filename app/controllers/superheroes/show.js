@@ -19,7 +19,7 @@ var SuperheroesShowController = Ember.ObjectController.extend({
       cautiousness: 'Inclination to make decisions carefully and think through relevant facts and alternatives. High scorers tend to be careful when deliberating options and calculating outcomes. By contrast, low scores on this attribute suggest a tendency to act without thinking things through.',
       sociability: 'The enjoyment of being around people and working with others. Individuals who score high on Sociability are likely to be motivated to interact with others. Low scorers on this attribute could be uninterested in having frequent social interaction. Caliper’s Performance Models show that Sociability can detract from job performance in some Job Families. In those circumstances, a highly sociable person would be apt to socialize with others, perhaps at the expense of producing results, while those with low scores would be unlikely to allow socializing to become a distraction.',
       gregariousness: 'Comfort with meeting new people and initiating conversations. Highly gregarious people would likely be comfortable establishing contact and networking. Those who have low scores on this attribute may be uneasy about taking the initiative in social situations. Caliper’s Performance Models indicate that Gregariousness can inhibit performance in some Job Families. When this attribute is a Performance Inhibitor, people with high scores could be motivated to network, which may detract from fulfilling position requirements. By contrast low scorers are unlikely to let the desire to meet people interfere with job performance.',
-      accomodation: 'Desire to help others. Individuals who have high scores on this attribute tend to be motivated to help people. Those with low scores might be uninterested in providing assistance. In certain Job Families, Accommodation can be a Performance Inhibitor. In such cases, people who are highly accommodating are apt to be motivated to assist others, which may detract from fulfilling position requirements. Individuals with low scores are unlikely to let the need to help people interfere with their job performance.',
+      accommodation: 'Desire to help others. Individuals who have high scores on this attribute tend to be motivated to help people. Those with low scores might be uninterested in providing assistance. In certain Job Families, Accommodation can be a Performance Inhibitor. In such cases, people who are highly accommodating are apt to be motivated to assist others, which may detract from fulfilling position requirements. Individuals with low scores are unlikely to let the need to help people interfere with their job performance.',
       skepticism: 'Inclination to doubt or question others’ motives. Caliper’s research has shown that this attribute is a Performance Inhibitor in some Job Families. Highly skeptical individuals tend to be guarded and wary of others’ intentions. People with low levels on this scale are likely to be trusting and willing to give others the benefit of the doubt.',
       abstractReasoning: 'Potential to solve problems and understand the logical relationships among concepts. People who show a high level of Abstract Reasoning Ability should be capable of understanding complex issues and integrating information. Individuals with low levels tend to be most effective when handling issues that have straightforward solutions.',
       ideaOrientation: 'Preference for thinking creatively and generating new ways to solve problems. Individuals with high Idea Orientation are likely to be motivated to develop creative, original solutions, while low scorers are inclined to use well-established methods. In certain Job Families, high Idea Orientation can derail performance. In these Job Families, people who show high scores are apt to be distracted by their need to generate new ideas. Those with low scores are unlikely to allow the desire to innovate to become a disruption.',
@@ -42,20 +42,19 @@ var SuperheroesShowController = Ember.ObjectController.extend({
 
       // sort the heroes in order of their absolute difference from the current hero
       rankedHeroes = rankedHeroes.sort(function(a, b) { return Math.abs(controller.get(attribute) - b.get(attribute)) - Math.abs(controller.get(attribute) - a.get(attribute)); });
-      var reverseRankedHeroes = rankedHeroes.reverse();
 
       // build the actual tooltip - rather have that in the template than here
-      rankedHeroes.splice(0,5).forEach(function(hero) {
+      rankedHeroes.slice(0,5).forEach(function(hero) {
         tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ")<br>";
       });
 
-      tooltip += '<br>Most like you:<p />';
-      reverseRankedHeroes.splice(0,5).forEach(function(hero) {
+      tooltip += 'Most like you:<p />';
+      rankedHeroes.reverse().slice(0,5).forEach(function(hero) {
         tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ")<br>";
       });
 
       if( explanations[attribute] )
-	  tooltip += '<p>' + explanations[attribute] + '</p>';
+        tooltip += '<p /><p /><p>' + explanations[attribute] + '</p>';
 
       controller.set(attribute + 'SimilarityTooltip', tooltip);
     });
