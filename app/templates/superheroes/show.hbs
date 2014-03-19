@@ -6,6 +6,12 @@
         <div class="panel-body">
           <div class="photo pull-left">
             <img {{bind-attr src=picUrl}} />
+            <div class="social-container">
+              {{view "social" socialType="facebook"}}
+              {{view "social" socialType="gplus"}}
+              {{view "social" socialType="twitter"}}
+              {{view "social" socialType="pnprofile"}}
+            </div>
           </div>
           <div class="info pull-right">
             <h3 class="full_name">{{fullName}}</h3>
