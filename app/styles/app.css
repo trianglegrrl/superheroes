@@ -2,3 +2,11 @@
 html, body {
     margin: 20px;
 }
+.social-button {
+  padding-top: 10px;
+  padding-right: 15px;
+}
+.tooltip-inner {
+  min-width: 30em;
+  padding-bottom: 1em;
+}

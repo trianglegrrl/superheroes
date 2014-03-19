@@ -34,28 +34,31 @@ var SuperheroesShowController = Ember.ObjectController.extend({
 
     // loop through the attribute names, building a list of the most different superheroes for each name
     attributes.forEach(function(attribute) {
-      var tooltip = "Least like you:<p />";
-
       // get all the heroes but the current one
       var rankedHeroes = controller.store.all('superhero');
       rankedHeroes = rankedHeroes.rejectBy('id',controller.get('id'));
 
       // sort the heroes in order of their absolute difference from the current hero
-      rankedHeroes = rankedHeroes.sort(function(a, b) { return Math.abs(controller.get(attribute) - b.get(attribute)) - Math.abs(controller.get(attribute) - a.get(attribute)); });
+      rankedHeroes = rankedHeroes.sort(function(a, b) { return Math.abs(controller.get(attribute) - a.get(attribute)) - Math.abs(controller.get(attribute) - b.get(attribute)); });
 
       // build the actual tooltip - rather have that in the template than here
-      rankedHeroes.slice(0,5).forEach(function(hero) {
-        tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ")<br>";
-      });
-
-      tooltip += 'Most like you:<p />';
-      rankedHeroes.reverse().slice(0,5).forEach(function(hero) {
-        tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ")<br>";
-      });
+      var tooltip = '<h4>' + attribute + ' - Your Score: ' + controller.get(attribute) + '</h4><p />';
 
       if( explanations[attribute] )
-        tooltip += '<p /><p /><p>' + explanations[attribute] + '</p>';
+        tooltip += '<p>' + explanations[attribute] + '</p></p>';
 
+      // add in the most and least like people
+      tooltip += '<h4>People most like you:</h4><p />';
+      rankedHeroes.slice(0,5).forEach(function(hero) {
+        tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ')<br>';
+      });
+
+      tooltip += '<h4>Peoople least like you:</h4><p />';
+      rankedHeroes.reverse().slice(0,5).forEach(function(hero) {
+        tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ')<br>';
+      });
+
+      // stow it away for use in the template - named ATTRIBUTESimilarityTooltip
       controller.set(attribute + 'SimilarityTooltip', tooltip);
     });
   }.observes('id')
