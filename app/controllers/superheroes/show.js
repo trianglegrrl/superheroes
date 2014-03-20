@@ -3,10 +3,10 @@ var SuperheroesShowController = Ember.ObjectController.extend({
    * it computes the list of most different heroes for each quality
    * and stashes it in the controller so that the template
    * can use the lists as tooltips
+   *
+   * FIXME: this is the OLD way we generated tooltips - just left in for reference for now; needs to be removed
    */
   computeSimilarity: function() {
-    var attributes = ['assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'];
-
     // copied and pasted from http://www.calipermedia.calipercorp.com/collateral/CaliperTraits.pdf
     var explanations = {
       assertiveness: 'Potential to communicate information and ideas in a direct manner. Individuals scoring high on this quality should be willing to communicate their ideas and opinions. People with low Assertiveness scores may be uncomfortable expressing their viewpoints.',
@@ -33,6 +33,8 @@ var SuperheroesShowController = Ember.ObjectController.extend({
     var controller = this;
 
     // loop through the attribute names, building a list of the most different superheroes for each name
+    var attributes = ['assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'];
+
     attributes.forEach(function(attribute) {
       // get all the heroes but the current one
       var rankedHeroes = controller.store.all('superhero');
@@ -61,7 +63,48 @@ var SuperheroesShowController = Ember.ObjectController.extend({
       // stow it away for use in the template - named ATTRIBUTESimilarityTooltip
       controller.set(attribute + 'SimilarityTooltip', tooltip);
     });
-  }.observes('id')
+  }.observes('id'),
+
+  /* similarityMatrix is a computed property
+   * it triggers once per route transition - when the id of the controller's model changes
+   * it really depends on all of the Caliper attributes, but expressing that dependency causes
+   * it to fire once per attribute, and there seems to be no way to ask which attribute
+   * caused it to trigger.
+   * Returns an object indexed by the attributes, containing "similar" and "dissimilar"
+   * arrays of superheroes
+   */
+  similarityMatrix: function() {
+    // loop through the attribute names, building a list of the most different superheroes for each name
+    var attributes = ['assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'];
+
+    // this won't mean the same thing inside the loop so hang on to it
+    var controller = this;
+
+    // accumulate similarities here, indexed by attribute
+    var attributeSimilarities = {};
+
+    attributes.forEach(function(attribute) {
+      // get all the heroes but the current one
+      var rankedHeroes = controller.store.all('superhero');
+      rankedHeroes = rankedHeroes.rejectBy('id',controller.get('id'));
+
+      // sort the heroes in order of their absolute difference from the current hero
+      rankedHeroes = rankedHeroes.sort(function(a, b) { return Math.abs(controller.get(attribute) - a.get(attribute)) - Math.abs(controller.get(attribute) - b.get(attribute)); });
+      var similar = rankedHeroes.slice(0,5);
+      var dissimilar = rankedHeroes.reverse().slice(0,5);
+      attributeSimilarities[attribute] = { similar: similar, dissimilar: dissimilar };
+    });
+
+    return attributeSimilarities;
+  }.property('id'),
+
+  /* minimal computed function that I'm testing with to see if a helper whose argument
+   * is a computed property rather than a model property will work right
+   * answer seems to be no
+   */
+  computesto: function() {
+    return this.get('id');
+  }.property('id')
 });
 
 export default SuperheroesShowController;
