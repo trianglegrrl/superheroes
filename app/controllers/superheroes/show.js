@@ -95,6 +95,8 @@ var SuperheroesShowController = Ember.ObjectController.extend({
       attributeSimilarities[attribute] = { similar: similar, dissimilar: dissimilar };
     });
 
+
+    this.get('model').incrementProperty('similarityUpdateSemaphore');
     return attributeSimilarities;
   }.property('id'),
 
