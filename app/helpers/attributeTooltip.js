@@ -10,49 +10,15 @@
  *
  * FIXME
  * 
+ * Using instructions from http://iamstef.net/ember-app-kit/guides/using-modules.html
+ *
  * Why doesn't this work? 
  *
- * export default Ember.Handlebars.makeBoundHelper(function (similarityUpdateSemaphore, attribute, label) {
+ * app.js has this line in it:
  *
- * similarityUpdateSemaphore is in the model, yet this consumes one of the
- * helper arguments rather than automatically matching against the model property. The only fix
- * I've found to make this work is to pass similarityUpdateSemaphore in the helper invocation :(
+ * Ember.Handlebars.registerBoundHelper('attributeTooltip', attributeTooltipHelper, 'id', 'similarityUpdateSemaphore');
  *
- * Plus, mail-to.js DOES appear to work. I don't see the difference.
- * 
- * 
- * Why doesn't this work (after the helper function definition)?
- *
- * }, 'similarityUpdateSemaphore' );
- *
- * This should cause this helper to observe similarityUpdateSemaphore and refresh when it changes, but
- * I don't observe any refresh. I've also tried 'id' and all the attribute names from the model.
- *
- *
- * Why doesn't this work?
- *
- * export default Ember.Handlebars.registerBoundHelper('attribute-tooltip', function (similarityUpdateSemaphore, attribute, label) {
- * or
- * export default Ember.Handlebars.helper('attribute-tooltip', function (similarityUpdateSemaphore, attribute, label) {
- * (as per http://emberjs.com/guides/templates/writing-helpers/)
- *
- * With or without similarityUpdateSemaphore, both of these forms cause Ember to throw:
- *
- * Uncaught TypeError: undefined is not a function        ember.js:27140
- * 
- * More specifically, helper.apply is failing because helper is not a function as it should be -
- * it's an object, undecorated by Ember, with one property ("default", which is undefined)
- * 
- * I'm using makeBoundHelper because that clearly works in mail-to.js
- *
- * When I change the filename and helper name to 'attributeTooltip' (thinking the dash might
- * be relevant as it's required in components) I get a different error:
- *
- * Uncaught Error: <appkit@view:default::ember450> Handlebars error: Could not find property 'attributeTooltip' on object <appkit@controller:superheroes/show::ember449>. 
- *    -- ember.js:27147
- *
- * at least that's an actual error.
- *
+ * and yet this helper does not refresh when id or similarityUpdateSemaphore changes
  *
  * Ultimately what I want to do is observe the computed property similarityMatrix - apparently this is
  * possible if you .get('similarityMatrix') in the controller's init. I don't want to mess with this
@@ -60,7 +26,7 @@
  * http://emberjs.com/blog/2013/08/29/ember-1-0-rc8.html
  */
 
-Ember.Handlebars.helper('attributeTooltip', function (attribute, label) {
+export default function (attribute, label) {
   // copied and pasted from http://www.calipermedia.calipercorp.com/collateral/CaliperTraits.pdf
   var explanations = {
     abstractReasoning: 'Potential to solve problems and understand the logical relationships among concepts. People who show a high level of Abstract Reasoning Ability should be capable of understanding complex issues and integrating information. Individuals with low levels tend to be most effective when handling issues that have straightforward solutions.',
@@ -82,7 +48,7 @@ Ember.Handlebars.helper('attributeTooltip', function (attribute, label) {
     urgency: 'The tendency to take quick action in order to obtain immediate results. High scorers on this attribute tend to be driven to act quickly. Individuals with low levels of Urgency are inclined to take time when handling tasks.'
     };
 
-  label = (arguments.length === 3) ? attribute.charAt(0).toUpperCase() + attribute.slice(1) : Em.Handlebars.Utils.escapeExpression(label);
+  label = (arguments.length === 2) ? attribute.charAt(0).toUpperCase() + attribute.slice(1) : Em.Handlebars.Utils.escapeExpression(label);
 
   var tooltip = '<h4>' + label + ' - Your Score: ' + this.get(attribute) + '</h4><p />';
 
@@ -113,5 +79,4 @@ Ember.Handlebars.helper('attributeTooltip', function (attribute, label) {
 
   var output = '<span rel="tooltip" data-html="true" class="hoverable-tooltip" data-original-title="' + tooltip + '">' + label + '</span>';
   return new Em.Handlebars.SafeString(output);
-}, 'similarityUpdateSemaphore' );
-
+}

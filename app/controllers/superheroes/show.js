@@ -96,9 +96,12 @@ var SuperheroesShowController = Ember.ObjectController.extend({
     });
 
 
-    this.get('model').incrementProperty('similarityUpdateSemaphore');
     return attributeSimilarities;
-  }.property('id'),
+  }.property('model.id'),
+
+  similaritySemaphore: function() {
+    this.get('model').incrementProperty('similarityUpdateSemaphore');
+  }.observes('id'),
 
   /* minimal computed function that I'm testing with to see if a helper whose argument
    * is a computed property rather than a model property will work right
