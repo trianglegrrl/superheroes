@@ -48,16 +48,13 @@ export default Ember.Handlebars.makeBoundHelper(function (similarityMatrix, attr
   // add in the most and least like people
   tooltip += '<h4>People most like you:</h4><p />';
 
-  // call the computed function - tried to bind on this but that doesn't seem to work
-  var matrix = similarityMatrix;
-
-  matrix[attribute].similar.forEach(function(hero) {
+  similarityMatrix[attribute].similar.forEach(function(hero) {
     tooltip += hero.get('fullName') + '(' + hero.get(attribute) + ')<br>';
   });
 
   tooltip += '<h4>Peoople least like you:</h4><p />';
 
-  matrix[attribute].dissimilar.forEach(function(hero) {
+  similarityMatrix[attribute].dissimilar.forEach(function(hero) {
     tooltip += hero.get('fullName') + '(' + hero.get(attribute) + ')<br>';
   });
 
