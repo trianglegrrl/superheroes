@@ -15,9 +15,6 @@ App.Store = DS.Store.extend({
   adapter: DS.FixtureAdapter
 });
 
-import attributeTooltipHelper from 'appkit/helpers/attributeTooltip';
-Ember.Handlebars.registerBoundHelper('attributeTooltip', attributeTooltipHelper, 'id', 'similarityUpdateSemaphore');
-
 Ember.View.reopen({
   init: function() {
     this._super();
