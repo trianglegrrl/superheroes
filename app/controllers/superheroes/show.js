@@ -1,4 +1,12 @@
 var SuperheroesShowController = Ember.ObjectController.extend({
+  /*
+   * have to do this to allow us to observe this computed property
+   * http://stackoverflow.com/questions/19345553/ember-js-observer-on-computed-property-not-working-example-from-guides
+   */
+  init: function() {
+    this.get('similarityMatrix');
+  },
+
   /* similarityMatrix is a computed property
    * it triggers once per route transition - when the id of the controller's model changes
    * it really depends on all of the Caliper attributes, but expressing that dependency causes
@@ -30,6 +38,8 @@ var SuperheroesShowController = Ember.ObjectController.extend({
 
       // sort the heroes in order of their absolute difference from the current hero
       rankedHeroes = rankedHeroes.sort(function(a, b) { return Math.abs(controller.get(attribute) - a.get(attribute)) - Math.abs(controller.get(attribute) - b.get(attribute)); });
+
+      // .reverse() reverses the array in place, so stash the results away before building the object
       var similar = rankedHeroes.slice(0,5);
       var dissimilar = rankedHeroes.reverse().slice(0,5);
       attributeSimilarities[attribute] = { similar: similar, dissimilar: dissimilar };
