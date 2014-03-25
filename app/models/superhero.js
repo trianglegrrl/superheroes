@@ -35,23 +35,130 @@ var Superhero = DS.Model.extend({
   externalStructure: DS.attr('number'),
 
   discStyles: {
-    'iD': 'influence/Dominance',
-    'i' : 'influence',
-    'iS': 'influence/Support',
-    'Si': 'Support/influence',
-    'S' : 'Support',
-    'SC': 'Support/Conscientiousness',
-    'CS': 'Conscientiousness/Support',
-    'C' : 'Conscientiousness',
-    'CD': 'Conscientiousness/Dominance',
-    'DC': 'Dominance/Conscientiousness',
-    'D' : 'Dominance',
-    'Di': 'Dominance/influence'
+    'iD': {
+            name: 'influence/Dominance',
+            opposites: ['CS', 'C', 'SC'],
+            similar: ['Di', 'iD', 'i']
+          },
+    'i' : {
+            name: 'influence',
+            opposites: ['C', 'CD', 'CS'],
+            similar: ['iD', 'i', 'iS']
+          },
+    'iS': {
+            name: 'influence/Support',
+            opposites: ['CD', 'C', 'D'],
+            similar: ['iS', 'i', 'Si']
+          },
+    'Si': {
+            name: 'Support/influence',
+            opposites: ['DC', 'CD', 'D'],
+            similar: ['Si', 'S', 'iS']
+          },
+    'S' : {
+            name: 'Support',
+            opposites: ['D', 'DC', 'Di'],
+            similar: ['S', 'Si', 'SC']
+          },
+    'SC': {
+            name: 'Support/Conscientiousness',
+            opposites: ['Di', 'D', 'iD'],
+            similar: ['SC', 'S', 'CS']
+          },
+    'CS': {
+            name: 'Conscientiousness/Support',
+            opposites: ['iD', 'i', 'Di'],
+            similar: ['CS', 'SC', 'C']
+          },
+    'C' : {
+            name: 'Conscientiousness',
+            opposites: ['iD', 'i', 'iS'],
+            similar: ['C', 'CD', 'CS']
+          },
+    'CD': {
+            name: 'Conscientiousness/Dominance',
+            opposites: ['iS', 'i', 'Si'],
+            similar: ['CD', 'C', 'DC']
+          },
+    'DC': {
+            name: 'Dominance/Conscientiousness',
+            opposites: ['Si', 'S', 'iS'],
+            similar: ['DC', 'CD', 'D']
+          },
+    'D' : {
+            name: 'Dominance',
+            opposites: ['SC', 'S', 'Si'],
+            similar: ['D', 'DC', 'Di']
+          },
+    'Di': {
+            name: 'Dominance/influence',
+            opposites: ['SC', 'S', 'CS'],
+            similar: ['D', 'Di', 'iD']
+          }
   },
+
   discStyleDescription: function() {
     var style = this.get('majorDiscStyle');
     var styles = this.get('discStyles');
-    return(styles[style]);
+    return(styles[style].name);
+  }.property('majorDiscStyle', 'discStyles'),
+
+  discStyleOpposites: function() {
+    var style = this.get('majorDiscStyle');
+    var styles = this.get('discStyles');
+    var opposites = styles[style].opposites;
+
+    var controller = this;
+
+    var heroes = controller.store.all('superhero');
+    heroes = heroes.rejectBy('id',controller.get('id'));
+
+    var results = [];
+    var heroesWhoAreOpposites = [];
+
+    opposites.forEach(function(opposite) {
+      heroesWhoAreOpposites = heroes
+                                .filterBy('majorDiscStyle', opposite);
+
+      if (!heroesWhoAreOpposites) {
+        return([]);
+      }
+
+      heroesWhoAreOpposites.forEach(function (opp){
+        results = $.merge(results, [opp]).slice(0, 5);
+      });
+    });
+
+    return(results);
+  }.property('majorDiscStyle', 'discStyles'),
+
+  discStyleSimilar: function() {
+    var style = this.get('majorDiscStyle');
+    var styles = this.get('discStyles');
+    var similar = styles[style].similar;
+
+    var controller = this;
+
+    var heroes = controller.store.all('superhero');
+    heroes = heroes.rejectBy('id',controller.get('id'));
+
+    var results = [];
+    var heroesWhoAreSimilar = [];
+
+    similar.forEach(function(obj) {
+      heroesWhoAreSimilar = heroes
+                              .filterBy('majorDiscStyle', obj);
+
+      if (!heroesWhoAreSimilar) {
+        return([]);
+      }
+
+      heroesWhoAreSimilar.forEach(function (obj){
+        results = $.merge(results, [obj]).slice(0, 5);
+      });
+    });
+
+    return(results);
   }.property('majorDiscStyle', 'discStyles')
 });
 
@@ -60,7 +167,7 @@ Superhero.FIXTURES = [
     id: 1,
     fullName:"Alaina Hardie",
     email: "alaina@precisionnutrition.com",
-    picUrl: "http://placepuppy.it/200/150",
+    picUrl: "/assets/nerd_life.jpg",
     twitterUrl: 'https://twitter.com/trianglegrrl',
     facebookUrl: 'https://facebook.com/alainahardie',
     gplusUrl: 'https://google.com/+AlainaHardie',
@@ -69,7 +176,7 @@ Superhero.FIXTURES = [
     whatILove: "Red wine, long walks on the beach, and classless subnetting.",
     whatIHate: "Nazis, snakes, and Nazis.",
     whatINeed: "Compassion, commitment, and $100,000 in unmarked US currency.",
-    majorDiscStyle: 'SC',
+    majorDiscStyle: 'Si',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
     assertiveness:93,
@@ -95,7 +202,7 @@ Superhero.FIXTURES = [
     id: 2,
     fullName:"Ralph Wiggum",
     email: "ralph@precisionnutrition.com",
-    picUrl: "http://placepuppy.it/200/150",
+    picUrl: "/assets/sloth.jpg",
     twitterUrl: 'https://twitter.com/trianglegrrl',
     facebookUrl: 'https://facebook.com/alainahardie',
     gplusUrl: 'https://google.com/+AlainaHardie',
@@ -130,7 +237,7 @@ Superhero.FIXTURES = [
     id: 3,
     fullName:"Kaywinnet Lee Frye",
     email: "kaylee@precisionnutrition.com",
-    picUrl: "http://placepuppy.it/200/150",
+    picUrl: "/assets/sloth.jpg",
     twitterUrl: 'https://twitter.com/trianglegrrl',
     facebookUrl: 'https://facebook.com/alainahardie',
     gplusUrl: 'https://google.com/+AlainaHardie',
@@ -165,7 +272,7 @@ Superhero.FIXTURES = [
     id: 4,
     fullName:"Hipster Douchebag",
     email: "yolo@precisionnutrition.com",
-    picUrl: "http://placepuppy.it/200/150",
+    picUrl: "/assets/sloth.jpg",
     twitterUrl: 'https://twitter.com/trianglegrrl',
     facebookUrl: 'https://facebook.com/alainahardie',
     gplusUrl: 'https://google.com/+AlainaHardie',
@@ -200,7 +307,7 @@ Superhero.FIXTURES = [
     id: 29,
     fullName:"Krista Scott-Dixon",
     email: "krista@precisionnutrition.com",
-    picUrl: "http://placepuppy.it/200/150",
+    picUrl: "/assets/sloth.jpg",
     twitterUrl: 'https://twitter.com/trianglegrrl',
     facebookUrl: 'https://facebook.com/alainahardie',
     gplusUrl: 'https://google.com/+AlainaHardie',
@@ -250,8 +357,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 99,
       "id" : 40,
       "ideaOrientation" : 57,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "Di",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/todd-waylon",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 59,
@@ -286,7 +393,7 @@ Superhero.FIXTURES = [
       "id" : 41,
       "ideaOrientation" : 93,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/abraham-burns",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 30,
@@ -321,7 +428,7 @@ Superhero.FIXTURES = [
       "id" : 42,
       "ideaOrientation" : 27,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/selma-waylon",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 42,
@@ -355,8 +462,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 69,
       "id" : 43,
       "ideaOrientation" : 14,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "D",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/todd-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 42,
@@ -390,8 +497,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 46,
       "id" : 44,
       "ideaOrientation" : 3,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "iS",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/patty-hibbert",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 7,
@@ -425,8 +532,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 68,
       "id" : 45,
       "ideaOrientation" : 49,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "CD",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/maude-burns",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 77,
@@ -460,8 +567,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 65,
       "id" : 46,
       "ideaOrientation" : 71,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "Si",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/waylon-burns",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 43,
@@ -495,8 +602,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 31,
       "id" : 47,
       "ideaOrientation" : 57,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "iD",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/rod-brockman",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 95,
@@ -531,7 +638,7 @@ Superhero.FIXTURES = [
       "id" : 48,
       "ideaOrientation" : 31,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/waylon-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 29,
@@ -565,8 +672,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 28,
       "id" : 49,
       "ideaOrientation" : 1,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/homer-simpson",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 76,
@@ -601,7 +708,7 @@ Superhero.FIXTURES = [
       "id" : 50,
       "ideaOrientation" : 75,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/nelson-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 84,
@@ -636,7 +743,7 @@ Superhero.FIXTURES = [
       "id" : 51,
       "ideaOrientation" : 59,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-flanders",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 84,
@@ -671,7 +778,7 @@ Superhero.FIXTURES = [
       "id" : 52,
       "ideaOrientation" : 84,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/montgomery-brockman",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 13,
@@ -706,7 +813,7 @@ Superhero.FIXTURES = [
       "id" : 53,
       "ideaOrientation" : 79,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-brockman",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 12,
@@ -741,7 +848,7 @@ Superhero.FIXTURES = [
       "id" : 54,
       "ideaOrientation" : 31,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/maggie-burns",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 69,
@@ -776,7 +883,7 @@ Superhero.FIXTURES = [
       "id" : 55,
       "ideaOrientation" : 60,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/todd-hibbert",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 89,
@@ -811,7 +918,7 @@ Superhero.FIXTURES = [
       "id" : 56,
       "ideaOrientation" : 49,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/rod-bouvier",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 71,
@@ -846,7 +953,7 @@ Superhero.FIXTURES = [
       "id" : 57,
       "ideaOrientation" : 47,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/diamond joe-simpson",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 65,
@@ -881,7 +988,7 @@ Superhero.FIXTURES = [
       "id" : 58,
       "ideaOrientation" : 65,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-burns",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 30,
@@ -916,7 +1023,7 @@ Superhero.FIXTURES = [
       "id" : 59,
       "ideaOrientation" : 79,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/marge-brockman",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 65,
@@ -951,7 +1058,7 @@ Superhero.FIXTURES = [
       "id" : 60,
       "ideaOrientation" : 99,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/seymour-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 21,
@@ -986,7 +1093,7 @@ Superhero.FIXTURES = [
       "id" : 61,
       "ideaOrientation" : 88,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/waylon-flanders",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 51,
@@ -1021,7 +1128,7 @@ Superhero.FIXTURES = [
       "id" : 62,
       "ideaOrientation" : 34,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/seymour-hibbert",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 29,
@@ -1056,7 +1163,7 @@ Superhero.FIXTURES = [
       "id" : 63,
       "ideaOrientation" : 96,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/maggie-waylon",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 38,
@@ -1091,7 +1198,7 @@ Superhero.FIXTURES = [
       "id" : 64,
       "ideaOrientation" : 69,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 87,
@@ -1126,7 +1233,7 @@ Superhero.FIXTURES = [
       "id" : 65,
       "ideaOrientation" : 52,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/marge-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 96,
@@ -1161,7 +1268,7 @@ Superhero.FIXTURES = [
       "id" : 66,
       "ideaOrientation" : 86,
       "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/patty-muntz",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 82,
@@ -1195,8 +1302,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 77,
       "id" : 67,
       "ideaOrientation" : 22,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "Di",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/patty-quimby",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 3,
@@ -1230,8 +1337,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 69,
       "id" : 68,
       "ideaOrientation" : 25,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "Di",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/selma-hibbert",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 25,
@@ -1265,8 +1372,8 @@ Superhero.FIXTURES = [
       "gregariousness" : 92,
       "id" : 69,
       "ideaOrientation" : 95,
-      "majorDiscStyle" : "i",
-      "picUrl" : "http://placepuppy.it/200/150",
+      "majorDiscStyle" : "Di",
+      "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ned-bouvier",
       "priorities" : "Eating, sleeping, making life difficult for The Man.",
       "riskTaking" : 31,
