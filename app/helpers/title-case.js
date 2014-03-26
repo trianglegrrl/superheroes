@@ -3,5 +3,5 @@
 // For more details: http://stefanpenner.github.io/ember-app-kit/guides/using-modules.html
 
 export default Ember.Handlebars.makeBoundHelper(function(word) {
-  return word.split('').reverse().join('');
+  return Case.title(word);
 });
