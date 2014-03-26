@@ -32,6 +32,9 @@ var SuperheroesShowController = Ember.ObjectController.extend({
      * and "least like me" could be <10 or >90 with a 50
      */
     attributes.forEach(function(attribute) {
+
+//      attribute = 'sociability';
+
       // get all the heroes but the current one
       var rankedHeroes = controller.store.all('superhero');
       rankedHeroes = rankedHeroes.rejectBy('id',controller.get('id'));
@@ -41,7 +44,9 @@ var SuperheroesShowController = Ember.ObjectController.extend({
 
       // .reverse() reverses the array in place, so stash the results away before building the object
       var similar = rankedHeroes.slice(0,5);
-      var dissimilar = rankedHeroes.reverse().slice(0,5);
+
+      // weed out everyone who is less than 40 off
+      var dissimilar = rankedHeroes.reject(function(hero) { return Math.abs(hero.get(attribute) - controller.get(attribute)) < 41; }).reverse().slice(0,5);
       attributeSimilarities[attribute] = { similar: similar, dissimilar: dissimilar };
     });
 
