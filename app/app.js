@@ -14,4 +14,26 @@ App.Store = DS.Store.extend({
   adapter: DS.FixtureAdapter
 });
 
+Ember.View.reopen({
+  init: function() {
+    this._super();
+    var self = this;
+
+    // bind attributes beginning with 'data-'
+    Em.keys(this).forEach(function(key) {
+      if (key.substr(0, 5) === 'data-') {
+        self.get('attributeBindings').pushObject(key);
+      }
+    });
+  }
+});
+
 export default App;
+
+// This is necessary to make the Bootstrap tooltips work.
+// Not very Ember-y, but hey, you only live once.
+$(document).ready(function() {
+  $('body').tooltip({
+      selector: '[rel=tooltip]'
+  });
+});
