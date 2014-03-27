@@ -159,7 +159,50 @@ var Superhero = DS.Model.extend({
     });
 
     return(results);
-  }.property('majorDiscStyle', 'discStyles')
+  }.property('majorDiscStyle', 'discStyles'),
+
+  /* similarityMatrix is a computed property
+   * it triggers once per route transition - when the id of the controller's model changes
+   * it really depends on all of the Caliper attributes, but expressing that dependency causes
+   * it to fire once per attribute, and there seems to be no way to ask which attribute
+   * caused it to trigger.
+   * Returns an object indexed by the attributes, containing "similar" and "dissimilar"
+   * arrays of superheroes
+   */
+  similarityMatrix: function() {
+    // loop through the attribute names, building a list of the most different superheroes for each name
+    var attributes = ['assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'];
+
+    // this won't mean the same thing inside the loop so hang on to it
+    var controller = this;
+
+    // accumulate similarities here, indexed by attribute
+    var attributeSimilarities = {};
+
+    /* FIXME - implement KSD's algorithm for dissimilar heroes
+     *
+     * "least like me" = >40 points
+     * thus "least like me" with a 20 would have to be a 60 or more
+     * and "least like me" could be <10 or >90 with a 50
+     */
+    attributes.forEach(function(attribute) {
+      // get all the heroes but the current one
+      var rankedHeroes = controller.store.all('superhero');
+      rankedHeroes = rankedHeroes.rejectBy('id',controller.get('id'));
+
+      // sort the heroes in order of their absolute difference from the current hero
+      rankedHeroes = rankedHeroes.sort(function(a, b) { return Math.abs(controller.get(attribute) - a.get(attribute)) - Math.abs(controller.get(attribute) - b.get(attribute)); });
+
+      // .reverse() reverses the array in place, so stash the results away before building the object
+      var similar = rankedHeroes.slice(0,5);
+
+      // weed out everyone who is less than 40 off
+      var dissimilar = rankedHeroes.reject(function(hero) { return Math.abs(hero.get(attribute) - controller.get(attribute)) < 41; }).reverse().slice(0,5);
+      attributeSimilarities[attribute] = { similar: similar, dissimilar: dissimilar };
+    });
+
+    return attributeSimilarities;
+  }.property('assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure')
 });
 
 Superhero.FIXTURES = [
@@ -214,7 +257,7 @@ Superhero.FIXTURES = [
     majorDiscStyle: 'SC',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
-    assertiveness:31,
+    assertiveness:93,
     aggressiveness:2,
     egoDrive:9,
     empathy:68,
@@ -249,7 +292,7 @@ Superhero.FIXTURES = [
     majorDiscStyle: 'Si',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
-    assertiveness:31,
+    assertiveness:93,
     aggressiveness:2,
     egoDrive:9,
     empathy:68,
@@ -284,7 +327,7 @@ Superhero.FIXTURES = [
     majorDiscStyle: 'SC',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
-    assertiveness:31,
+    assertiveness:93,
     aggressiveness:2,
     egoDrive:9,
     empathy:68,
@@ -319,7 +362,7 @@ Superhero.FIXTURES = [
     majorDiscStyle: 'i',
     superpowers: "Pushups, counting to 10, drop-kicking ill-behaved children.",
     priorities: "Eating, sleeping, making life difficult for The Man.",
-    assertiveness:31,
+    assertiveness:93,
     aggressiveness:2,
     egoDrive:9,
     empathy:68,
@@ -342,7 +385,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 37,
       "accommodation" : 60,
       "aggressiveness" : 53,
-      "assertiveness" : 57,
+      "assertiveness" : 93,
       "cautiousness" : 30,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 40,
@@ -377,7 +420,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 4,
       "accommodation" : 89,
       "aggressiveness" : 74,
-      "assertiveness" : 47,
+      "assertiveness" : 93,
       "cautiousness" : 12,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 82,
@@ -412,7 +455,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 2,
       "accommodation" : 18,
       "aggressiveness" : 74,
-      "assertiveness" : 53,
+      "assertiveness" : 93,
       "cautiousness" : 1,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 20,
@@ -447,7 +490,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 33,
       "accommodation" : 5,
       "aggressiveness" : 71,
-      "assertiveness" : 19,
+      "assertiveness" : 93,
       "cautiousness" : 39,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 9,
@@ -482,7 +525,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 18,
       "accommodation" : 30,
       "aggressiveness" : 35,
-      "assertiveness" : 50,
+      "assertiveness" : 93,
       "cautiousness" : 70,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 72,
@@ -517,7 +560,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 37,
       "accommodation" : 18,
       "aggressiveness" : 89,
-      "assertiveness" : 31,
+      "assertiveness" : 93,
       "cautiousness" : 99,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 27,
@@ -552,7 +595,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 3,
       "accommodation" : 61,
       "aggressiveness" : 56,
-      "assertiveness" : 64,
+      "assertiveness" : 93,
       "cautiousness" : 6,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 12,
@@ -587,7 +630,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 41,
       "accommodation" : 26,
       "aggressiveness" : 91,
-      "assertiveness" : 99,
+      "assertiveness" : 93,
       "cautiousness" : 57,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 26,
@@ -622,7 +665,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 94,
       "accommodation" : 24,
       "aggressiveness" : 43,
-      "assertiveness" : 89,
+      "assertiveness" : 93,
       "cautiousness" : 26,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 28,
@@ -657,7 +700,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 82,
       "accommodation" : 73,
       "aggressiveness" : 60,
-      "assertiveness" : 60,
+      "assertiveness" : 93,
       "cautiousness" : 40,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 98,
@@ -692,7 +735,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 53,
       "accommodation" : 17,
       "aggressiveness" : 55,
-      "assertiveness" : 53,
+      "assertiveness" : 93,
       "cautiousness" : 27,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 51,
@@ -727,7 +770,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 32,
       "accommodation" : 96,
       "aggressiveness" : 74,
-      "assertiveness" : 48,
+      "assertiveness" : 93,
       "cautiousness" : 88,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 75,
@@ -762,7 +805,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 47,
       "accommodation" : 75,
       "aggressiveness" : 38,
-      "assertiveness" : 11,
+      "assertiveness" : 93,
       "cautiousness" : 52,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 91,
@@ -797,7 +840,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 71,
       "accommodation" : 28,
       "aggressiveness" : 8,
-      "assertiveness" : 25,
+      "assertiveness" : 93,
       "cautiousness" : 12,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 58,
@@ -832,7 +875,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 77,
       "accommodation" : 82,
       "aggressiveness" : 46,
-      "assertiveness" : 31,
+      "assertiveness" : 93,
       "cautiousness" : 21,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 96,
@@ -867,7 +910,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 46,
       "accommodation" : 50,
       "aggressiveness" : 16,
-      "assertiveness" : 48,
+      "assertiveness" : 93,
       "cautiousness" : 95,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 60,
@@ -902,7 +945,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 65,
       "accommodation" : 87,
       "aggressiveness" : 31,
-      "assertiveness" : 17,
+      "assertiveness" : 93,
       "cautiousness" : 91,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 60,
@@ -937,7 +980,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 1,
       "accommodation" : 48,
       "aggressiveness" : 75,
-      "assertiveness" : 72,
+      "assertiveness" : 93,
       "cautiousness" : 27,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 64,
@@ -972,7 +1015,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 28,
       "accommodation" : 50,
       "aggressiveness" : 47,
-      "assertiveness" : 11,
+      "assertiveness" : 93,
       "cautiousness" : 42,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 41,
@@ -1007,7 +1050,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 90,
       "accommodation" : 95,
       "aggressiveness" : 93,
-      "assertiveness" : 33,
+      "assertiveness" : 93,
       "cautiousness" : 50,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 88,
@@ -1042,7 +1085,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 45,
       "accommodation" : 30,
       "aggressiveness" : 83,
-      "assertiveness" : 36,
+      "assertiveness" : 93,
       "cautiousness" : 74,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 60,
@@ -1077,7 +1120,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 14,
       "accommodation" : 21,
       "aggressiveness" : 99,
-      "assertiveness" : 8,
+      "assertiveness" : 93,
       "cautiousness" : 62,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 69,
@@ -1112,7 +1155,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 38,
       "accommodation" : 46,
       "aggressiveness" : 78,
-      "assertiveness" : 61,
+      "assertiveness" : 93,
       "cautiousness" : 5,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 10,
@@ -1147,7 +1190,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 29,
       "accommodation" : 76,
       "aggressiveness" : 23,
-      "assertiveness" : 73,
+      "assertiveness" : 93,
       "cautiousness" : 39,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 73,
@@ -1182,7 +1225,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 24,
       "accommodation" : 3,
       "aggressiveness" : 84,
-      "assertiveness" : 92,
+      "assertiveness" : 93,
       "cautiousness" : 9,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 89,
@@ -1217,7 +1260,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 20,
       "accommodation" : 84,
       "aggressiveness" : 100,
-      "assertiveness" : 96,
+      "assertiveness" : 93,
       "cautiousness" : 56,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 7,
@@ -1252,7 +1295,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 3,
       "accommodation" : 36,
       "aggressiveness" : 15,
-      "assertiveness" : 21,
+      "assertiveness" : 93,
       "cautiousness" : 2,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 51,
@@ -1287,7 +1330,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 100,
       "accommodation" : 11,
       "aggressiveness" : 75,
-      "assertiveness" : 30,
+      "assertiveness" : 93,
       "cautiousness" : 32,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 89,
@@ -1322,7 +1365,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 87,
       "accommodation" : 35,
       "aggressiveness" : 28,
-      "assertiveness" : 12,
+      "assertiveness" : 93,
       "cautiousness" : 100,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 46,
@@ -1357,7 +1400,7 @@ Superhero.FIXTURES = [
       "abstractReasoning" : 25,
       "accommodation" : 58,
       "aggressiveness" : 100,
-      "assertiveness" : 72,
+      "assertiveness" : 93,
       "cautiousness" : 81,
       "discPicUrl" : "/assets/SampleDISC.png",
       "egoDrive" : 48,

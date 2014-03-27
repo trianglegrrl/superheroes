@@ -38,7 +38,8 @@ export default Ember.Handlebars.makeBoundHelper(function (similarityMatrix, attr
     urgency: 'The tendency to take quick action in order to obtain immediate results. High scorers on this attribute tend to be driven to act quickly. Individuals with low levels of Urgency are inclined to take time when handling tasks.'
     };
 
-  label = (arguments.length === 3) ? attribute.charAt(0).toUpperCase() + attribute.slice(1) : Em.Handlebars.Utils.escapeExpression(label);
+//  label = (arguments.length === 3) ? attribute.charAt(0).toUpperCase() + attribute.slice(1) : Em.Handlebars.Utils.escapeExpression(label);
+  label = (arguments.length === 3) ? Case.title(attribute) : Em.Handlebars.Utils.escapeExpression(label);
 
   var tooltip = '<h4>' + label + ' - Your Score: ' + this.get(attribute) + '</h4><p />';
 
@@ -58,7 +59,7 @@ export default Ember.Handlebars.makeBoundHelper(function (similarityMatrix, attr
     tooltip += hero.get('fullName') + '(' + hero.get(attribute) + ')<br>';
   });
 
-  var output = '<span rel="tooltip" data-html="true" class="hoverable-tooltip" data-original-title="' + tooltip + '">' + label + '</span>';
+  var output = '<a href="#/superheroes/caliper/' + attribute + '" rel="tooltip" data-html="true" class="hoverable-tooltip" data-original-title="' + tooltip + '">' + label + '</a>';
   return new Em.Handlebars.SafeString(output);
 });
 
