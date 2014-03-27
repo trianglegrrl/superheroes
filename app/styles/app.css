@@ -11,3 +11,7 @@ html, body {
   min-width: 30em;
   padding-bottom: 1em;
 }
+
+.error-page {
+  text-align: center;
+}
