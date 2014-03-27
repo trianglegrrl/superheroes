@@ -6,3 +6,8 @@ html, body {
   padding-top: 10px;
   padding-right: 15px;
 }
+
+.tooltip-inner {
+  min-width: 30em;
+  padding-bottom: 1em;
+}
