@@ -2,6 +2,19 @@
 html, body {
     margin: 20px;
 }
+
+a {
+  color: #0492b1;
+}
+
+i.fa {
+  color: #0492b1;
+}
+
+a:hover {
+  text-decoration:none;
+}
+
 .social-button {
   padding-top: 10px;
   padding-right: 15px;
@@ -9,7 +22,18 @@ html, body {
 
 .tooltip-inner {
   min-width: 30em;
-  padding-bottom: 1em;
+  padding: 2em 2em ;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #999;
+}
+
+.tooltip-inner h2 {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  background-color: #ccc;
 }
 
 .error-page {

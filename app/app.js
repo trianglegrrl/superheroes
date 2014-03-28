@@ -31,7 +31,6 @@ Ember.View.reopen({
 export default App;
 
 // This is necessary to make the Bootstrap tooltips work.
-// Not very Ember-y, but hey, you only live once.
 $(document).ready(function() {
   $('body').tooltip({
       selector: '[rel=tooltip]'
