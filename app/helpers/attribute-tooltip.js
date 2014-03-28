@@ -1,3 +1,5 @@
+/*global Case: true */
+
 /* helper to decorate attributes with tooltips showing
  *   - explanation of the attribute
  *   - most similar heroes

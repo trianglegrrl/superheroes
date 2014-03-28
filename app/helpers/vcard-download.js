@@ -1,3 +1,5 @@
+/*global escape: true */
+
 // stuff the current hero's vCard in an A tag as a data URI for download
 // again, not triggering on vCard changes unless vCard is an argument :(
 export default Ember.Handlebars.makeBoundHelper(function(vCard) {
