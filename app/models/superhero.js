@@ -178,12 +178,6 @@ var Superhero = DS.Model.extend({
     // accumulate similarities here, indexed by attribute
     var attributeSimilarities = {};
 
-    /* FIXME - implement KSD's algorithm for dissimilar heroes
-     *
-     * "least like me" = >40 points
-     * thus "least like me" with a 20 would have to be a 60 or more
-     * and "least like me" could be <10 or >90 with a 50
-     */
     attributes.forEach(function(attribute) {
       // get all the heroes but the current one
       var rankedHeroes = controller.store.all('superhero');
@@ -202,6 +196,36 @@ var Superhero = DS.Model.extend({
 
     return attributeSimilarities;
   }.property('assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'),
+
+  globalCaliperScoreDiffs: function() {
+    var heroes = this.store.all('superhero').rejectBy('id',this.get('id'));
+    var rankedHeroes = [];
+
+    var me = this;
+
+    heroes.forEach(function(hero) {
+        var attributes = ['assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'];
+        var average = 0;
+
+	attributes.forEach(function(attr, i) {
+          average *= i;
+          average += Math.abs(hero.get(attr) - me.get(attr));
+          average /= i + 1;
+        });
+
+        rankedHeroes.push({score: parseInt(average, 10), hero: hero});
+      });
+
+      return rankedHeroes.sort(function(a,b) { return a.score - b.score; });
+    }.property('assertiveness', 'aggressiveness', 'egoDrive', 'empathy', 'egoStrengthResilience', 'riskTaking', 'urgency', 'cautiousness', 'sociability', 'gregariousness', 'accommodation', 'skepticism', 'abstractReasoning', 'ideaOrientation', 'thoroughness', 'flexibility', 'selfStructure', 'externalStructure'),
+
+  globalCaliperMostLike: function() {
+    return this.get('globalCaliperScoreDiffs').slice(0, 5);
+  }.property('globalCaliperScoreDiffs'),
+
+  globalCaliperLeastLike: function() {
+    return this.get('globalCaliperScoreDiffs').slice(-5).reverse();
+  }.property('globalCaliperScoreDiffs'),
 
   /*
    * generate and return a vCard for this hero
