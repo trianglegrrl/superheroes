@@ -1,22 +1,6 @@
 <div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    <h2>Team</h2>
-
-    {{#each}}
-      <div class="superhero">
-        {{#link-to 'superheroes.show' this}}
-          {{fullName}}
-        {{/link-to}}
-      </div>
-    {{/each}}
-
-    <h2>Caliper Attributes</h2>
-
-    {{#each caliperAttributes}}
-      <div class="caliper-attribute"><a href="#/superheroes/caliper/{{unbound name}}">{{title-case name}}</a></div>
-    {{/each}}
-  </div>
-  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" id="detail">
+  {{partial "menu"}}
+  <div class="col-xs-10" id="detail">
     {{outlet}}
   </div>
 </div>

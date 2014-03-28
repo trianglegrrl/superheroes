@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h2 class="full_name">{{fullName}}</h2>
+        </div>
+        <div class="photo">
+          <img width="100%" {{bind-attr src=picUrl}} />
+          <div class="social-container">
+            {{view "social" socialType="facebook"}}
+            {{view "social" socialType="gplus"}}
+            {{view "social" socialType="twitter"}}
+            {{view "social" socialType="pnprofile"}}
+            {{mail-to email}}
+            {{vcard-download vCard}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">About Me</h4>
+      </div>
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>My Superpowers</dt>
+          <dd>{{superpowers}}</dd>
+          <dt>My Priorities</dt>
+          <dd>{{priorities}}</dd>
+          <dt>What I Love</dt>
+          <dd>{{whatILove}}</dd>
+          <dt>What I Hate</dt>
+          <dd>{{whatIHate}}</dd>
+          <dt>What I Need From You</dt>
+          <dd>{{whatINeed}}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

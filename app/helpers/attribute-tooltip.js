@@ -41,24 +41,35 @@ export default Ember.Handlebars.makeBoundHelper(function (similarityMatrix, attr
 //  label = (arguments.length === 3) ? attribute.charAt(0).toUpperCase() + attribute.slice(1) : Em.Handlebars.Utils.escapeExpression(label);
   label = (arguments.length === 3) ? Case.title(attribute) : Em.Handlebars.Utils.escapeExpression(label);
 
-  var tooltip = '<h4>' + label + ' - Your Score: ' + this.get(attribute) + '</h4><p />';
+  var tooltip = '<h4>' + label + ' - Their Score: ' + this.get(attribute) + '</h4><p />';
 
   if( explanations[attribute] )
-    tooltip += '<p>' + Em.Handlebars.Utils.escapeExpression(explanations[attribute]) + '</p></p>';
+    tooltip += '<p><em>' + Em.Handlebars.Utils.escapeExpression(explanations[attribute]) + '</em></p>';
 
   // add in the most and least like people
-  tooltip += '<h4>People most like you:</h4><p />';
+  tooltip += '<h5>Most like this person:</h5><p />';
 
   similarityMatrix[attribute].similar.forEach(function(hero) {
-    tooltip += hero.get('fullName') + '(' + hero.get(attribute) + ')<br>';
+    tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ')<br>';
   });
 
-  tooltip += '<h4>Peoople least like you:</h4><p />';
+  tooltip += '<h5>Least like this person:</h5><p />';
 
   similarityMatrix[attribute].dissimilar.forEach(function(hero) {
-    tooltip += hero.get('fullName') + '(' + hero.get(attribute) + ')<br>';
+    tooltip += hero.get('fullName') + ' (' + hero.get(attribute) + ')<br>';
   });
 
-  var output = '<a href="#/superheroes/caliper/' + attribute + '" rel="tooltip" data-html="true" class="hoverable-tooltip" data-original-title="' + tooltip + '">' + label + '</a>';
+  var output =  ' <i class="fa fa-lg fa-info"  '
+                + 'rel="tooltip" class="hoverable-tooltip" '
+                + 'data-html="true" data-trigger="hover click" data-placement="auto" '
+                + 'data-original-title="'
+                + tooltip + '">'
+                + '</i>'
+                + ' '
+                + '<a href="#/superheroes/caliper/'
+                + attribute
+                + '">'
+                + label
+                + "</a>";
   return new Em.Handlebars.SafeString(output);
 });
