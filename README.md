@@ -21,3 +21,7 @@ To install and run on local OS X, if you don't have these packages:
 # Checking that shit out
 
 Browse to ```http://127.0.0.1:8000/```
+
+# Testing that shit out
+
+Run ```grunt server``` and browse to ```http://0.0.0.0:8000/tests```
