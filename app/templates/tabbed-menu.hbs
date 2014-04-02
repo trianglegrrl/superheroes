@@ -1,0 +1,24 @@
+<div class="col-xs-2">
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href='#team-tab'><h5>Team</h5></a></li>
+    <li><a href='#caliper-tab'><h5>Caliper</h5></a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="team-tab">
+      {{#each}}
+        <div class="superhero">
+          {{#link-to 'superheroes.show' this}}
+            {{fullName}}
+          {{/link-to}}
+        </div>
+      {{/each}}
+    </div>
+    <div class="tab-pane" id="caliper-tab">
+      {{#each caliperAttributes}}
+        <div class="caliper-attribute"><a href="#/superheroes/caliper/{{unbound name}}">{{title-case name}}</a></div>
+      {{/each}}
+    </div>
+  </div>
+</div>
