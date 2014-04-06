@@ -1,4 +1,7 @@
 export default Ember.Handlebars.makeBoundHelper(function (emailAddress, label) {
+  if(Ember.isEmpty(emailAddress))
+    return '';
+
   emailAddress = Em.Handlebars.Utils.escapeExpression(emailAddress);
   label = (arguments.length === 2) ? emailAddress : Em.Handlebars.Utils.escapeExpression(label);
 
