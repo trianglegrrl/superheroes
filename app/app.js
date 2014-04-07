@@ -28,6 +28,22 @@ Ember.View.reopen({
   }
 });
 
+/* track errors on Google Analytics as events
+ * scarfed code from http://discuss.emberjs.com/t/capturing-and-reporting-errors-in-production/2647/2
+ */
+var ga_report_error = function(error) {
+  if( window.ga && typeof window.ga === "function" )
+    window.ga('send', 'event', 'error', error.message, error.stack);
+};
+
+App.ApplicationRoute = Ember.Route.extend({
+  actions: { error: ga_report_error }
+});
+
+Ember.onerror = ga_report_error;
+Ember.RSVP.configure('onerror', ga_report_error);
+window.onerror = ga_report_error;
+
 // from https://gist.github.com/InkSpeck/9145242
 //Enables Use of the Data Tab in Ember inspector with Ember App kit
 DS.DebugAdapter.reopen({
