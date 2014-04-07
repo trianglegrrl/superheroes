@@ -1,0 +1,170 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h2>Profile Checker</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing Pic ({{missingPic.length}})</h3>
+        </div>
+        <ul>
+          {{#each missingPic}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing Major DiSC Style ({{missingDiSC.length}})</h3>
+        </div>
+        <ul>
+          {{#each missingDiSC}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Empty Profile ({{emptyProfile.length}})</h3>
+        </div>
+        <ul>
+          {{#each emptyProfile}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='row'>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing Caliper ({{incompleteCaliper.length}})</h3>
+        </div>
+        <ul>
+          {{#each incompleteCaliper}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing Email ({{missingEmail.length}})</h3>
+        </div>
+        <ul>
+          {{#each missingEmail}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='row'>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing PnProfile ({{missingPnProfile.length}})</h3>
+        </div>
+        <ul>
+          {{#each missingPnProfile}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing Twitter ({{missingTwitter.length}})</h3>
+        </div>
+        <ul>
+          {{#each missingTwitter}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h3 class="full_name">Missing Facebook ({{missingFacebook.length}})</h3>
+        </div>
+        <ul>
+          {{#each missingFacebook}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+

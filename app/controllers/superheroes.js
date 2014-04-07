@@ -20,7 +20,11 @@ var SuperheroesController = Ember.ArrayController.extend({
       { name: 'flexibility' },
       { name: 'selfStructure' },
       { name: 'externalStructure' }
-  ]
+  ],
+
+  heroes: function() {
+    return this.store.all('superhero');
+  }.property('')
 });
 
 export default SuperheroesController;

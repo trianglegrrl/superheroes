@@ -74,6 +74,10 @@ var SuperheroesShowController = Ember.ObjectController.extend({
   discStyleDescription: function() {
     var style = this.get('model.majorDiscStyle');
     var styles = this.get('discStyles');
+
+    if(!style || !styles)
+	return '';
+
     return(styles[style].name);
   }.property('majorDiscStyle', 'discStyles'),
 
@@ -81,6 +85,10 @@ var SuperheroesShowController = Ember.ObjectController.extend({
   discStyleOpposites: function() {
     var style = this.get('model.majorDiscStyle');
     var styles = this.get('discStyles');
+
+    if(!style || !styles)
+	return '';
+
     var opposites = styles[style].opposites;
 
     var controller = this;
@@ -110,6 +118,10 @@ var SuperheroesShowController = Ember.ObjectController.extend({
   discStyleSimilar: function() {
     var style = this.get('model.majorDiscStyle');
     var styles = this.get('discStyles');
+
+    if(!style || !styles)
+	return '';
+
     var similar = styles[style].similar;
 
     var controller = this;
