@@ -32,7 +32,12 @@ var Superhero = DS.Model.extend({
   thoroughness: DS.attr('number'),
   flexibility: DS.attr('number'),
   selfStructure: DS.attr('number'),
-  externalStructure: DS.attr('number')
+  externalStructure: DS.attr('number'),
+  lastUpdated: DS.attr('date'),
+
+  _setLastUpdated: function() {
+    this.set('lastUpdated', new Date());
+  }.observes('fullName','email','twitterUrl','facebookUrl','gplusUrl','pnProfileUrl','picUrl','discPicUrl','whatILove','whatIHate','whatINeed','majorDiscStyle','superpowers','priorities','assertiveness','aggressiveness','egoDrive','empathy','egoStrengthResilience','riskTaking','urgency','cautiousness','sociability','gregariousness','accomodation','skepticism','abstractReasoning','ideaOrientation','thoroughness','flexibility','selfStructure','externalStructure')
 });
 
 Superhero.FIXTURES = [
@@ -69,7 +74,8 @@ Superhero.FIXTURES = [
     thoroughness:3,
     flexibility:84,
     selfStructure:18,
-    externalStructure:2
+    externalStructure:2,
+    lastUpdated: new Date(1397310321984)
   },
   {
     id: 2,
@@ -104,7 +110,8 @@ Superhero.FIXTURES = [
     thoroughness:91,
     flexibility:44,
     selfStructure:47,
-    externalStructure:4
+    externalStructure:4,
+    lastUpdated: new Date(1397310321984)
   },
   {
     id: 3,
@@ -139,7 +146,8 @@ Superhero.FIXTURES = [
     thoroughness:91,
     flexibility:44,
     selfStructure:47,
-    externalStructure:4
+    externalStructure:4,
+    lastUpdated: new Date(1397310321984)
   },
   {
     id: 4,
@@ -174,7 +182,8 @@ Superhero.FIXTURES = [
     thoroughness:91,
     flexibility:44,
     selfStructure:47,
-    externalStructure:4
+    externalStructure:4,
+    lastUpdated: new Date(1397310321984)
   },
   {
     id: 29,
@@ -209,7 +218,8 @@ Superhero.FIXTURES = [
     thoroughness:91,
     flexibility:44,
     selfStructure:47,
-    externalStructure:4
+    externalStructure:4,
+    lastUpdated: new Date(1397310321984)
   },
    {
       "abstractReasoning" : 37,
@@ -230,6 +240,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 99,
       "id" : 40,
       "ideaOrientation" : 57,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "Di",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/todd-waylon",
@@ -265,6 +276,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 76,
       "id" : 41,
       "ideaOrientation" : 93,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/abraham-burns",
@@ -300,6 +312,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 78,
       "id" : 42,
       "ideaOrientation" : 27,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/selma-waylon",
@@ -335,6 +348,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 69,
       "id" : 43,
       "ideaOrientation" : 14,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "D",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/todd-muntz",
@@ -370,6 +384,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 46,
       "id" : 44,
       "ideaOrientation" : 3,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "iS",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/patty-hibbert",
@@ -405,6 +420,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 68,
       "id" : 45,
       "ideaOrientation" : 49,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "CD",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/maude-burns",
@@ -440,6 +456,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 65,
       "id" : 46,
       "ideaOrientation" : 71,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "Si",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/waylon-burns",
@@ -475,6 +492,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 31,
       "id" : 47,
       "ideaOrientation" : 57,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "iD",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/rod-brockman",
@@ -510,6 +528,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 35,
       "id" : 48,
       "ideaOrientation" : 31,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/waylon-muntz",
@@ -545,6 +564,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 28,
       "id" : 49,
       "ideaOrientation" : 1,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/homer-simpson",
@@ -580,6 +600,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 50,
       "id" : 50,
       "ideaOrientation" : 75,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/nelson-muntz",
@@ -615,6 +636,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 89,
       "id" : 51,
       "ideaOrientation" : 59,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-flanders",
@@ -650,6 +672,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 26,
       "id" : 52,
       "ideaOrientation" : 84,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/montgomery-brockman",
@@ -685,6 +708,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 59,
       "id" : 53,
       "ideaOrientation" : 79,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-brockman",
@@ -720,6 +744,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 60,
       "id" : 54,
       "ideaOrientation" : 31,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/maggie-burns",
@@ -755,6 +780,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 30,
       "id" : 55,
       "ideaOrientation" : 60,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/todd-hibbert",
@@ -790,6 +816,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 25,
       "id" : 56,
       "ideaOrientation" : 49,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/rod-bouvier",
@@ -825,6 +852,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 78,
       "id" : 57,
       "ideaOrientation" : 47,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/diamondjoe-simpson",
@@ -860,6 +888,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 41,
       "id" : 58,
       "ideaOrientation" : 65,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-burns",
@@ -895,6 +924,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 16,
       "id" : 59,
       "ideaOrientation" : 79,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/marge-brockman",
@@ -930,6 +960,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 11,
       "id" : 60,
       "ideaOrientation" : 99,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/seymour-muntz",
@@ -965,6 +996,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 75,
       "id" : 61,
       "ideaOrientation" : 88,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/waylon-flanders",
@@ -1000,6 +1032,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 81,
       "id" : 62,
       "ideaOrientation" : 34,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/seymour-hibbert",
@@ -1035,6 +1068,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 26,
       "id" : 63,
       "ideaOrientation" : 96,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/maggie-waylon",
@@ -1070,6 +1104,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 95,
       "id" : 64,
       "ideaOrientation" : 69,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ling-muntz",
@@ -1105,6 +1140,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 56,
       "id" : 65,
       "ideaOrientation" : 52,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/marge-muntz",
@@ -1140,6 +1176,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 24,
       "id" : 66,
       "ideaOrientation" : 86,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "i",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/patty-muntz",
@@ -1175,6 +1212,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 77,
       "id" : 67,
       "ideaOrientation" : 22,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "Di",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/patty-quimby",
@@ -1210,6 +1248,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 69,
       "id" : 68,
       "ideaOrientation" : 25,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "Di",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/selma-hibbert",
@@ -1245,6 +1284,7 @@ Superhero.FIXTURES = [
       "gregariousness" : 92,
       "id" : 69,
       "ideaOrientation" : 95,
+      "lastUpdated": new Date(1397310321984),
       "majorDiscStyle" : "Di",
       "picUrl" : "/assets/sloth.jpg",
       "pnProfileUrl" : "http://www.precisionnutrition.com/meet-the-team/ned-bouvier",
@@ -1263,7 +1303,8 @@ Superhero.FIXTURES = [
    },
    {
       "id": 70,
-      "fullName": "I Am Noone"
+      "fullName": "I Am Noone",
+      "lastUpdated": new Date(1397310321984),
    },
 ];
 

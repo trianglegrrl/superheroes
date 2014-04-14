@@ -271,7 +271,11 @@ var SuperheroesShowController = Ember.ObjectController.extend({
     vCard += 'END:VCARD\n';
 
     return vCard;
-  }.property('fullName', 'email', 'picUrl', 'twitterUrl', 'facebookUrl', 'gpUrl', 'pnProfileUrl')
+  }.property('fullName', 'email', 'picUrl', 'twitterUrl', 'facebookUrl', 'gpUrl', 'pnProfileUrl'),
+
+  lastUpdatedISO: function() {
+    return this.get('lastUpdated').toISOString();
+  }.property('lastUpdated')
 });
 
 export default SuperheroesShowController;
