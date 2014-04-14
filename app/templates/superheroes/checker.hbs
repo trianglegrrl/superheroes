@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <h2>Profile Checker</h2>
+    <h1>Profile Checker</h1>
   </div>
 </div>
 
@@ -9,7 +9,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing Pic ({{missingPic.length}})</h3>
+          <h2 class="full_name">Missing Pic ({{missingPic.length}})</h2>
         </div>
         <ul>
           {{#each missingPic}}
@@ -28,7 +28,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing Major DiSC Style ({{missingDiSC.length}})</h3>
+          <h2 class="full_name">Missing Major DiSC Style ({{missingDiSC.length}})</h2>
         </div>
         <ul>
           {{#each missingDiSC}}
@@ -47,7 +47,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Empty Profile ({{emptyProfile.length}})</h3>
+          <h2 class="full_name">Empty Profile ({{emptyProfile.length}})</h2>
         </div>
         <ul>
           {{#each emptyProfile}}
@@ -70,7 +70,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing Caliper ({{incompleteCaliper.length}})</h3>
+          <h2 class="full_name">Missing Caliper ({{incompleteCaliper.length}})</h2>
         </div>
         <ul>
           {{#each incompleteCaliper}}
@@ -90,7 +90,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing Email ({{missingEmail.length}})</h3>
+          <h2 class="full_name">Missing Email ({{missingEmail.length}})</h2>
         </div>
         <ul>
           {{#each missingEmail}}
@@ -113,7 +113,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing PnProfile ({{missingPnProfile.length}})</h3>
+          <h2 class="full_name">Missing PnProfile ({{missingPnProfile.length}})</h2>
         </div>
         <ul>
           {{#each missingPnProfile}}
@@ -132,7 +132,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing Twitter ({{missingTwitter.length}})</h3>
+          <h2 class="full_name">Missing Twitter ({{missingTwitter.length}})</h2>
         </div>
         <ul>
           {{#each missingTwitter}}
@@ -151,7 +151,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="info">
-          <h3 class="full_name">Missing Facebook ({{missingFacebook.length}})</h3>
+          <h2 class="full_name">Missing Facebook ({{missingFacebook.length}})</h2>
         </div>
         <ul>
           {{#each missingFacebook}}
@@ -168,3 +168,45 @@
 
 </div>
 
+<div class='row'>
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h2 class="full_name">Missing Location ({{missingLocation.length}})</h2>
+        </div>
+        <ul>
+          {{#each missingLocation}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="info">
+          <h2 class="full_name">Missing Phone ({{missingPhone.length}})</h2>
+        </div>
+        <ul>
+          {{#each missingPhone}}
+            <li>
+              {{#link-to "superheroes.show" this}}
+                {{fullName}}
+              {{/link-to}}
+	    </li>
+           {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
