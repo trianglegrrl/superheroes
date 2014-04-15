@@ -1,3 +1,5 @@
+var isEmpty = Ember.isEmpty;
+
 /*
  * The SuperheroesCheckerController provides several computed properties
  * which return arrays of heroes who are lacking useful information
@@ -35,12 +37,26 @@ var SuperheroesCheckerController = Ember.Controller.extend({
 
   // return an array of heroes with a completely empty profile
   emptyProfile: function() {
-    return this.store.all('superhero').filter(function(hero) { return Ember.isEmpty(hero.get('whatILove'))
-                                                                   && Ember.isEmpty(hero.get('whatIHate'))
-                                                                   && Ember.isEmpty(hero.get('whatINeed'))
-                                                                   && Ember.isEmpty(hero.get('superpowers'));
+    return this.store.all('superhero').filter(function(hero) { return isEmpty(hero.get('whatILove'))
+                                                                   && isEmpty(hero.get('whatIHate'))
+                                                                   && isEmpty(hero.get('whatINeed'))
+                                                                   && isEmpty(hero.get('superpowers'));
                                                               });
   }.property('superhero.@each.whatILove','superhero.@each.whatIHate','superhero.@each.whatINeed','superhero.@each.superpowers'),
+
+  missingLocation: function() {
+    return this.store.all('superhero').filter(function(hero) { return isEmpty(hero.get('city'))
+                                                                   && isEmpty(hero.get('stateProv'))
+                                                                   && isEmpty(hero.get('postalCode'))
+                                                                   && isEmpty(hero.get('country'));
+                                                              });
+  }.property('superhero.@each.street','superhero.@each.city','superhero.@each.stateProv','superhero.@each.postalCode','superhero.@each.country'),
+
+  missingPhone: function() {
+    return this.store.all('superhero').filter(function(hero) { return isEmpty(hero.get('phoneNumber'))
+                                                                   && isEmpty(hero.get('backupPhoneNumber'));
+                                                              });
+  }.property('superhero.@each.phoneNumber', 'superhero.@each.backupPhoneNumber'),
 
   // return an array of heroes who do not have all Caliper attributes
   incompleteCaliper: function() {
@@ -51,7 +67,7 @@ var SuperheroesCheckerController = Ember.Controller.extend({
 
     heroes.forEach(function(hero){
       var missing_attribute_count = 0;
-      attributes.forEach(function( a ) { if(Ember.isEmpty(hero.get(a))) missing_attribute_count++; });
+      attributes.forEach(function( a ) { if(isEmpty(hero.get(a))) missing_attribute_count++; });
 
       if(missing_attribute_count)
         incomplete_heroes.push(hero);
@@ -62,7 +78,7 @@ var SuperheroesCheckerController = Ember.Controller.extend({
 /* this didn't work
     return this.store.all('superhero').filter(function(hero) {
       attributes.forEach(function(attr) {
-        return Ember.isEmpty(hero.get(attr));
+        return isEmpty(hero.get(attr));
       });
 */
 

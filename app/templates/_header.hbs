@@ -1,7 +1,20 @@
 <div class="navbar navbar-inverse" role="navigation">
   <div class="container">
+
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">PN Superheroes</a>
+
+      <div class="navbar-left">
+        <a class="navbar-brand" href="#">PN Superheroes</a>
+      </div>
+
+      <div class="navbar-form navbar-right">
+        <form {{action "search" on="submit"}}>
+          {{input value=queryField}}
+          <input type="submit" value="Search"/>
+        </form>
+      </div>
+
     </div>
+
   </div>
 </div>

@@ -1,3 +1,5 @@
+var isEmpty = Ember.isEmpty;
+
 var SuperheroesShowController = Ember.ObjectController.extend({
   /*
    * have to do this to allow us to observe this computed property
@@ -244,21 +246,35 @@ var SuperheroesShowController = Ember.ObjectController.extend({
     vCard += 'EMAIL;TYPE=PREF,INTERNET:' + this.get('email') + '\n';
 
     // only set social profile fields if we have them
-    if(this.get('twitterUrl'))
+    if(!isEmpty(this.get('twitterUrl')))
      vCard += 'X-SOCIALPROFILE;type=twitter:' + this.get('twitterUrl') + '\n';
-    if(this.get('facebookUrl'))
+    if(!isEmpty(this.get('facebookUrl')))
      vCard += 'X-SOCIALPROFILE;type=facebook:' + this.get('facebookUrl') + '\n';
-    if(this.get('gpUrl'))
+    if(!isEmpty(this.get('gpUrl')))
      vCard += 'X-SOCIALPROFILE;type=googleplus:' + this.get('gpUrl') + '\n';
 
     // set their PN Profile page to be their primary URL
-    if(this.get('pnProfileUrl'))
+    if(!isEmpty(this.get('pnProfileUrl')))
      vCard += 'URL:' + this.get('pnProfileUrl') + '\n';
+
+    // phone numbers
+    if(!isEmpty(this.get('phoneNumber')))
+      vCard += 'TEL;type=HOME;type=VOICE:' + this.get('phoneNumber') + '\n';
+    if(!isEmpty(this.get('backupPhoneNumber')))
+      vCard += 'TEL;type=BACKUP;type=VOICE:' + this.get('backupPhoneNumber') + '\n';
+
+    var street = isEmpty(this.get('street')) ? '' : this.get('street');
+    var city = isEmpty(this.get('city')) ? '' : this.get('city');
+    var stateProv = isEmpty(this.get('stateProv')) ? '' : this.get('stateProv');
+    var postalCode = isEmpty(this.get('postalCode')) ? '' : this.get('postalCode');
+    var country = isEmpty(this.get('country')) ? '' : this.get('country');
+
+    vCard += 'ADR;type=HOME:;;' + street + ' ;' + city + ';' + stateProv + ';' + postalCode + ';' + country + '\n';
 
     // use a default picture unless we have a picUrl and it starts with http
     // TESTME: we may need TYPE=[GIF|JPG|PNG]: before the actual URL
     // FIXME: photo URLs are just not working
-    if(this.get('picUrl') && new RegExp(/^http/).test(this.get('picUrl')) )
+    if(!isEmpty(this.get('picUrl')) && new RegExp(/^http/).test(this.get('picUrl')) )
       vCard += 'PHOTO;VALUE=URL;TYPE=JPG:' + this.get('picUrl') + '\n';
     else
       vCard += 'PHOTO;VALUE=URL;TYPE=PNG:https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/t1.0-1/c7.0.100.100/p100x100/305996_277385985698373_679123386_a.png\n';
